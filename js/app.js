@@ -20,6 +20,7 @@
 const navElements = document.querySelectorAll('section')
 const navList = document.getElementById('navbar__list')
 
+
 // End Global Variables
 
 /**************************************************/
@@ -73,4 +74,57 @@ const callbackfn = entries => {
     })
   }
 
+// Intersection Observer API that compute which section is in the viewport to help us see the active section in the navbar changes automatically as we scroll
+// Intersection Observer provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document's viewport.
+// https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+const options = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 1.0,
+}
+
+const observer = new IntersectionObserver(callbackfn, options)
+navElements.forEach(elment => {
+  observer.observe(document.getElementById(elment.id))
+})
 // End Main Functions
+
+/*
+window.addEventListener('scroll', function (event) {
+	if (isOnScreen(navElements)) {
+		navElements.innerHTML = '<section data-nav="' + navElements.getAttribute('section') + '">';
+	}
+}, false);
+
+var isOnScreen = function (navElements, buffer) {
+  //buffer is optional and allows you to return true when  
+  //the element is going to appear to the screen  
+  buffer = typeof buffer === 'undefined' ? 0 : buffer;
+  //buffer = 0;
+  
+  // Getting the bounding coordinates
+  // Get element's position in the viewport
+  // Get it's position in the viewport
+  const bounding = navElements.getBoundingClientRect();
+
+  // Log the results
+  //console.log(bounding);
+
+  // Check if element is in the viewport 
+  // Determining if the element is in the viewport using , we have to get the viewport’s width and the viewport’s height
+    // window.innerWidth, document.documentElement.clientWidth
+    // window.innerHeight , document.documentElement.clientHeight
+  if (bounding.top >= buffer && 
+    bounding.left >= buffer &&
+    // fallback for browser compatibility 
+    bounding.right <= ((window.innerWidth || document.documentElement.clientWidth) - buffer) &&
+    bounding.bottom <= ((window.innerHeight || document.documentElement.clientHeight) - buffer)) {
+      console.log('In the viewport!');
+      return true
+  } else {
+      console.log('Not in the viewport... whomp whomp');
+      return false;
+  }
+}
+*/
+
